@@ -70,16 +70,28 @@
   font-weight: bold;
   font-family: "Courier New", monospace;
 }
-
   </style>
 </head>
-  <div id="clock"></div>
+  <div id="clock" title="Click to toggle 12/24 hour format"></div>
 <script>
+  let use24Hour = false;
+
   function updateClock() {
     const now = new Date();
-    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    document.getElementById('clock').textContent = time;
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: !use24Hour
+    };
+    document.getElementById('clock').textContent = now.toLocaleTimeString([], options);
   }
+
+  document.getElementById('clock').addEventListener('click', () => {
+    use24Hour = !use24Hour;
+    updateClock();
+  });
+
   setInterval(updateClock, 1000);
   updateClock();
 </script>
