@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>RedFox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    /* === RedFox Theme Styles === */
     body {
       background: linear-gradient(-45deg, #0a0a0a, #1a0000, #220000, #0a0a0a);
       background-size: 400% 400%;
@@ -35,12 +36,8 @@
     }
 
     @keyframes pulse {
-      from {
-        text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
-      }
-      to {
-        text-shadow: 0 0 15px #ff5a5a, 0 0 30px #ff5a5a;
-      }
+      from { text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c; }
+      to { text-shadow: 0 0 15px #ff5a5a, 0 0 30px #ff5a5a; }
     }
 
     #clock {
@@ -107,14 +104,6 @@
       box-shadow: 0 0 10px #ff3c3c;
     }
 
-    audio {
-      margin-top: 30px;
-      border: 1px solid #ff3c3c;
-      border-radius: 10px;
-      background: #111;
-      color: #ff3c3c;
-    }
-
     .trail-dot {
       position: absolute;
       width: 6px;
@@ -132,73 +121,124 @@
         opacity: 0;
       }
     }
+
+    /* === Music Player Tabs === */
+    #now-playing {
+      margin-top: 30px;
+      font-size: 18px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 20px;
+      border: 1px solid #ff3c3c;
+      border-radius: 10px;
+      color: #ff3c3c;
+      text-shadow: 0 0 6px #ff3c3c;
+    }
+
+    .music-tabs {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .music-tabs button {
+      background: #111;
+      color: #ff3c3c;
+      border: 1px solid #ff3c3c;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .music-tabs button:hover {
+      background: #ff3c3c;
+      color: #0a0a0a;
+    }
+
+    .music-player iframe {
+      margin-top: 20px;
+      width: 300px;
+      height: 80px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 0 10px #ff3c3c;
+    }
   </style>
 </head>
 <body>
-  <!-- 🔒 Safe Weather Display (Static/Hardcoded) -->
-<div id="weather">🌡️ Temp: ...</div>
-<script>
-  fetch("https://wttr.in/?format=%t&u")
-    .then(res => res.text())
-    .then(temp => {
-      temp = temp.replace("+", "").trim();
-      document.getElementById("weather").textContent = `🌡️ Temp: ${temp}`;
-    })
-    .catch(err => {
-      document.getElementById("weather").textContent = "🌡️ Temp: N/A";
-    });
-</script>
+  <!-- 🌡️ Weather -->
+  <div id="weather">🌡️ Temp: ...</div>
+
   <!-- ⏰ Clock -->
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
 
-  <!-- 🦊 Logo -->
+  <!-- 🦊 RedFox Logo -->
   <h1 class="logo">🦊 RedFox</h1>
 
   <!-- 🔍 Search -->
   <div class="search-bar">
     <form action="https://www.google.com/search" method="GET">
-      <input type="text" name="q" placeholder="Search the web...">
+      <input type="text" name="q" placeholder="Search the web..." />
     </form>
   </div>
+
   <!-- 📁 Links -->
   <div class="links-grid">
-  <a href="https://www.youtube.com" class="card"><i class="fab fa-youtube"></i> YouTube</a>
-  <a href="https://www.reddit.com" class="card"><i class="fab fa-reddit-alien"></i> Reddit</a>
-  <a href="https://github.com" class="card"><i class="fab fa-github"></i> GitHub</a>
-  <a href="https://x.com" class="card"><i class="fab fa-x-twitter"></i> Twitter</a>
-</div>
+    <a href="https://www.youtube.com" class="card"><i class="fab fa-youtube"></i> YouTube</a>
+    <a href="https://www.reddit.com" class="card"><i class="fab fa-reddit-alien"></i> Reddit</a>
+    <a href="https://github.com" class="card"><i class="fab fa-github"></i> GitHub</a>
+    <a href="https://x.com" class="card"><i class="fab fa-x-twitter"></i> Twitter</a>
+  </div>
+
   <!-- 🎧 Music Player -->
-  <audio controls autoplay loop>
-    <source src="https://files.catbox.moe/tbdy9s.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <div id="now-playing">🎵 Now Playing: YouTube</div>
 
-  <!-- ⏰ Clock Script -->
+  <div class="music-tabs">
+    <button onclick="switchPlayer('youtube')"><i class="fab fa-youtube"></i> YouTube</button>
+    <button onclick="switchPlayer('soundcloud')"><i class="fab fa-soundcloud"></i> SoundCloud</button>
+    <button onclick="switchPlayer('spotify')"><i class="fab fa-spotify"></i> Spotify</button>
+  </div>
+
+  <div id="player-container" class="music-player">
+    <iframe
+      id="music-frame"
+      src="https://www.youtube.com/embed/J2e0E2ZGODk?autoplay=1&loop=1&playlist=J2e0E2ZGODk"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <!-- 🧠 Scripts -->
   <script>
-    let use24Hour = false;
+    // Weather Fetch
+    fetch("https://wttr.in/?format=%t&u")
+      .then(res => res.text())
+      .then(temp => {
+        temp = temp.replace("+", "").trim();
+        document.getElementById("weather").textContent = `🌡️ Temp: ${temp}`;
+      })
+      .catch(() => {
+        document.getElementById("weather").textContent = "🌡️ Temp: N/A";
+      });
 
+    // Clock
+    let use24Hour = false;
     function updateClock() {
       const now = new Date();
-      const options = {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: !use24Hour
-      };
+      const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: !use24Hour };
       document.getElementById('clock').textContent = now.toLocaleTimeString([], options);
     }
-
     document.getElementById('clock').addEventListener('click', () => {
       use24Hour = !use24Hour;
       updateClock();
     });
-
     setInterval(updateClock, 1000);
     updateClock();
-  </script>
 
-  <!-- ✨ Cursor Trail Script -->
-  <script>
+    // Cursor Trail
     document.addEventListener('mousemove', e => {
       const dot = document.createElement('div');
       dot.classList.add('trail-dot');
@@ -207,6 +247,28 @@
       document.body.appendChild(dot);
       setTimeout(() => dot.remove(), 800);
     });
+
+    // Switch Music Player
+    function switchPlayer(service) {
+      const iframe = document.getElementById("music-frame");
+      const nowPlaying = document.getElementById("now-playing");
+
+      let src = "", label = "";
+
+      if (service === "youtube") {
+        src = "https://www.youtube.com/embed/J2e0E2ZGODk?autoplay=1&loop=1&playlist=J2e0E2ZGODk";
+        label = "YouTube";
+      } else if (service === "soundcloud") {
+        src = "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/nocopyrightsounds/ncs-infinity&color=%23ff3c3c&auto_play=true&hide_related=false&show_comments=false&show_user=false";
+        label = "SoundCloud";
+      } else if (service === "spotify") {
+        src = "https://open.spotify.com/embed/track/4uLU6hMCjMI75M1A2tKUQC?utm_source=generator&autoplay=1";
+        label = "Spotify";
+      }
+
+      iframe.src = src;
+      nowPlaying.textContent = `🎵 Now Playing: ${label}`;
+    }
   </script>
 </body>
 </html>
