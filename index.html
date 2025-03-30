@@ -135,20 +135,18 @@
 </head>
 <body>
   <!-- 🔒 Safe Weather Display (Static/Hardcoded) -->
-<div id="weather">
-  <iframe
-    src="https://wttr.in/?format=%t&u"
-    width="85"
-    height="30"
-    style="
-      background: transparent;
-      border: none;
-      overflow: hidden;
-      filter: invert(1) hue-rotate(180deg) brightness(0.9);
-    "
-    scrolling="no"
-  ></iframe>
-</div>
+<div id="weather">🌡️ Temp: ...</div>
+<script>
+  fetch("https://wttr.in/?format=%t&u")
+    .then(res => res.text())
+    .then(temp => {
+      temp = temp.replace("+", "").trim();
+      document.getElementById("weather").textContent = `🌡️ Temp: ${temp}`;
+    })
+    .catch(err => {
+      document.getElementById("weather").textContent = "🌡️ Temp: N/A";
+    });
+</script>
   <!-- ⏰ Clock -->
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
 
