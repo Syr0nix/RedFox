@@ -153,19 +153,9 @@
       background: #ff3c3c;
       color: #0a0a0a;
     }
-
-    .music-player iframe {
-      margin-top: 20px;
-      width: 300px;
-      height: 80px;
-      border-radius: 10px;
-      border: none;
-      box-shadow: 0 0 10px #ff3c3c;
-    }
   </style>
 </head>
 <body>
-  <!-- UI Elements -->
   <div id="weather">🌡️ Temp: ...</div>
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
   <h1 class="logo">🦊 RedFox™</h1>
@@ -183,21 +173,11 @@
     <a href="https://x.com" class="card"><i class="fab fa-x-twitter"></i> Twitter</a>
   </div>
 
-  <!-- Music Section -->
-  <div id="now-playing">🎵 Now Playing: YouTube</div>
+  <!-- Now Playing -->
+  <div id="now-playing">🎵 Now Playing: (None)</div>
   <div class="music-tabs">
-    <button onclick="switchPlayer('youtube')"><i class="fab fa-youtube"></i> YouTube</button>
-    <button onclick="switchPlayer('soundcloud')"><i class="fab fa-soundcloud"></i> SoundCloud</button>
-    <button onclick="switchPlayer('spotify')"><i class="fab fa-spotify"></i> Spotify</button>
-  </div>
-
-  <div class="music-player">
-    <iframe
-      id="music-frame"
-      src="https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1&loop=1&playlist=DLzxrzFCyOs"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-    ></iframe>
+    <button onclick="sendControl('togglePlay')"><i class="fas fa-play"></i> Play/Pause</button>
+    <button onclick="sendControl('next')"><i class="fas fa-forward"></i> Next</button>
   </div>
 
   <!-- Scripts -->
@@ -236,28 +216,21 @@
       setTimeout(() => dot.remove(), 800);
     });
 
-    // Music Player Tabs
-    function switchPlayer(service) {
-      const iframe = document.getElementById("music-frame");
-      const nowPlaying = document.getElementById("now-playing");
+    // 🔁 Listen for now-playing updates from extension
+    window.addEventListener("message", function (event) {
+      if (event.origin !== window.location.origin) return;
+      const msg = event.data;
+      if (msg && msg.type === "nowPlaying") {
+        const label = msg.title
+          ? `🎵 Now Playing: ${msg.title}${msg.channel ? " — " + msg.channel : ""}`
+          : "🎵 Now Playing: (Nothing)";
+        document.getElementById("now-playing").textContent = label;
+      }
+    });
 
-      const players = {
-        youtube: {
-          src: "https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1&loop=1&playlist=DLzxrzFCyOs",
-          label: "YouTube"
-        },
-        soundcloud: {
-          src: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/nocopyrightsounds/ncs-infinity&color=%23ff3c3c&auto_play=true&hide_related=false&show_comments=false&show_user=false",
-          label: "SoundCloud"
-        },
-        spotify: {
-          src: "https://open.spotify.com/embed/track/4uLU6hMCjMI75M1A2tKUQC?utm_source=generator&autoplay=1",
-          label: "Spotify"
-        }
-      };
-
-      iframe.src = players[service].src;
-      nowPlaying.textContent = `🎵 Now Playing: ${players[service].label}`;
+    // ⏯ Send control commands to the extension
+    function sendControl(command) {
+      window.postMessage({ type: "control", command }, window.location.origin);
     }
   </script>
 </body>
