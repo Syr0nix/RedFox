@@ -5,7 +5,6 @@
   <title>RedFox</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* === RedFox Theme Styles === */
     body {
       background: linear-gradient(-45deg, #0a0a0a, #1a0000, #220000, #0a0a0a);
       background-size: 400% 400%;
@@ -22,17 +21,16 @@
     }
 
     @keyframes bgMove {
-      0% { background-position: 0% 50%; }
+      0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     .logo {
       font-size: 3.5rem;
       font-weight: bold;
+      margin-bottom: 10px;
       text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
       animation: pulse 2s infinite alternate;
-      margin-bottom: 10px;
     }
 
     @keyframes pulse {
@@ -40,30 +38,30 @@
       to { text-shadow: 0 0 15px #ff5a5a, 0 0 30px #ff5a5a; }
     }
 
-    #clock {
+    #clock, #weather {
       position: absolute;
+      font-family: "Courier New", monospace;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 0 0 10px #ff3c3c;
+      color: #ff3c3c;
+    }
+
+    #clock {
       top: 20px;
       right: 30px;
       font-size: 24px;
-      color: #ff3c3c;
-      text-shadow: 0 0 10px #ff3c3c;
-      font-weight: bold;
-      font-family: "Courier New", monospace;
       cursor: pointer;
     }
 
     #weather {
-      position: absolute;
       top: 20px;
       left: 30px;
-      font-size: 18px;
-      font-family: "Courier New", monospace;
-      color: #ff3c3c;
-      text-shadow: 0 0 8px #ff3c3c;
-      background-color: rgba(0,0,0,0.3);
+      background: rgba(0, 0, 0, 0.3);
       padding: 6px 12px;
       border-radius: 6px;
       border: 1px solid #ff3c3c;
+      text-shadow: 0 0 8px #ff3c3c;
     }
 
     .search-bar {
@@ -122,7 +120,6 @@
       }
     }
 
-    /* === Music Player Tabs === */
     #now-playing {
       margin-top: 30px;
       font-size: 18px;
@@ -168,23 +165,17 @@
   </style>
 </head>
 <body>
-  <!-- 🌡️ Weather -->
+  <!-- UI Elements -->
   <div id="weather">🌡️ Temp: ...</div>
-
-  <!-- ⏰ Clock -->
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
-
-  <!-- 🦊 RedFox Logo -->
   <h1 class="logo">🦊 RedFox</h1>
 
-  <!-- 🔍 Search -->
   <div class="search-bar">
     <form action="https://www.google.com/search" method="GET">
       <input type="text" name="q" placeholder="Search the web..." />
     </form>
   </div>
 
-  <!-- 📁 Links -->
   <div class="links-grid">
     <a href="https://www.youtube.com" class="card"><i class="fab fa-youtube"></i> YouTube</a>
     <a href="https://www.reddit.com" class="card"><i class="fab fa-reddit-alien"></i> Reddit</a>
@@ -192,50 +183,30 @@
     <a href="https://x.com" class="card"><i class="fab fa-x-twitter"></i> Twitter</a>
   </div>
 
-  <!-- 🎧 Music Player -->
+  <!-- Music Section -->
   <div id="now-playing">🎵 Now Playing: YouTube</div>
-
   <div class="music-tabs">
     <button onclick="switchPlayer('youtube')"><i class="fab fa-youtube"></i> YouTube</button>
     <button onclick="switchPlayer('soundcloud')"><i class="fab fa-soundcloud"></i> SoundCloud</button>
     <button onclick="switchPlayer('spotify')"><i class="fab fa-spotify"></i> Spotify</button>
   </div>
 
-  <div id="player-container" class="music-player">
+  <div class="music-player">
     <iframe
       id="music-frame"
-      src="https://www.youtube.com/embed/J2e0E2ZGODk?autoplay=1&loop=1&playlist=J2e0E2ZGODk"
-      frameborder="0"
+      src="https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1&loop=1&playlist=DLzxrzFCyOs"
       allow="autoplay; encrypted-media"
       allowfullscreen
     ></iframe>
   </div>
 
-  <!-- 🧠 Scripts -->
+  <!-- Scripts -->
   <script>
-  function loadNowPlaying() {
-    if (chrome && chrome.storage) {
-      chrome.storage.local.get(["redfox_now_playing"], result => {
-        if (result.redfox_now_playing) {
-          document.getElementById("now-playing").textContent =
-            "🎵 Now Playing: " + result.redfox_now_playing;
-        }
-      });
-    }
-  }
-
-  // Refresh every 5 seconds
-  setInterval(loadNowPlaying, 5000);
-  loadNowPlaying();
-</script>
-
-  <script>
-    // Weather Fetch
+    // Weather
     fetch("https://wttr.in/?format=%t&u")
       .then(res => res.text())
       .then(temp => {
-        temp = temp.replace("+", "").trim();
-        document.getElementById("weather").textContent = `🌡️ Temp: ${temp}`;
+        document.getElementById("weather").textContent = `🌡️ Temp: ${temp.replace("+", "").trim()}`;
       })
       .catch(() => {
         document.getElementById("weather").textContent = "🌡️ Temp: N/A";
@@ -259,32 +230,34 @@
     document.addEventListener('mousemove', e => {
       const dot = document.createElement('div');
       dot.classList.add('trail-dot');
-      dot.style.left = e.pageX + 'px';
-      dot.style.top = e.pageY + 'px';
+      dot.style.left = `${e.pageX}px`;
+      dot.style.top = `${e.pageY}px`;
       document.body.appendChild(dot);
       setTimeout(() => dot.remove(), 800);
     });
 
-    // Switch Music Player
+    // Music Player Tabs
     function switchPlayer(service) {
       const iframe = document.getElementById("music-frame");
       const nowPlaying = document.getElementById("now-playing");
 
-      let src = "", label = "";
+      const players = {
+        youtube: {
+          src: "https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1&loop=1&playlist=DLzxrzFCyOs",
+          label: "YouTube"
+        },
+        soundcloud: {
+          src: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/nocopyrightsounds/ncs-infinity&color=%23ff3c3c&auto_play=true&hide_related=false&show_comments=false&show_user=false",
+          label: "SoundCloud"
+        },
+        spotify: {
+          src: "https://open.spotify.com/embed/track/4uLU6hMCjMI75M1A2tKUQC?utm_source=generator&autoplay=1",
+          label: "Spotify"
+        }
+      };
 
-      if (service === "youtube") {
-        src = "https://www.youtube.com/embed/J2e0E2ZGODk?autoplay=1&loop=1&playlist=J2e0E2ZGODk";
-        label = "YouTube";
-      } else if (service === "soundcloud") {
-        src = "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/nocopyrightsounds/ncs-infinity&color=%23ff3c3c&auto_play=true&hide_related=false&show_comments=false&show_user=false";
-        label = "SoundCloud";
-      } else if (service === "spotify") {
-        src = "https://open.spotify.com/embed/track/4uLU6hMCjMI75M1A2tKUQC?utm_source=generator&autoplay=1";
-        label = "Spotify";
-      }
-
-      iframe.src = src;
-      nowPlaying.textContent = `🎵 Now Playing: ${label}`;
+      iframe.src = players[service].src;
+      nowPlaying.textContent = `🎵 Now Playing: ${players[service].label}`;
     }
   </script>
 </body>
