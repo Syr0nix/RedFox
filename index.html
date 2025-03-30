@@ -18,7 +18,7 @@
       height: 100vh;
       margin: 0;
       cursor: crosshair;
-      padding-top: 42px; /* offset for bookmark bar */
+      padding-top: 42px;
     }
 
     @keyframes bgMove {
@@ -32,6 +32,9 @@
       margin-bottom: 10px;
       text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
       animation: pulse 2s infinite alternate;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     @keyframes pulse {
@@ -156,7 +159,7 @@
       text-shadow: 0 0 5px #ff3c3c;
     }
 
-    /* === Bookmark Panel === */
+    /* === Bookmark Panel (Right) === */
     .bookmark-panel {
       position: fixed;
       top: 80px;
@@ -189,7 +192,9 @@
     }
 
     .bookmark-panel a {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       color: #ff3c3c;
       margin: 6px 0;
       text-decoration: none;
@@ -203,23 +208,29 @@
   </style>
 </head>
 <body>
-  <!-- 🔖 Custom RedFox Bookmarks Bar -->
+  <!-- 🔖 Top Firefox-style RedFox Bookmarks Bar -->
   <div class="redfox-bookmarks-bar">
     <a href="#"><i class="fas fa-sign-in-alt"></i> Import bookmarks...</a>
     <a href="#"><i class="fas fa-folder"></i> Illegal Services</a>
-    <!-- Add more items here if needed -->
+    <a href="#"><i class="fas fa-folder"></i> News</a>
+    <a href="#"><i class="fas fa-folder"></i> Projects</a>
   </div>
 
+  <!-- 📡 Weather + Clock -->
   <div id="weather">🌡️ Temp: ...</div>
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
-  <h1 class="logo">🦊 RedFox™</h1>
 
+  <!-- 🦊 Logo -->
+  <h1 class="logo"><i class="fas fa-firefox-browser"></i> RedFox™</h1>
+
+  <!-- 🔍 Search -->
   <div class="search-bar">
     <form action="https://www.google.com/search" method="GET">
       <input type="text" name="q" placeholder="Search the web..." />
     </form>
   </div>
 
+  <!-- 🔗 Quick Links -->
   <div class="links-grid">
     <a href="https://www.youtube.com" class="card"><i class="fab fa-youtube"></i> YouTube</a>
     <a href="https://www.reddit.com" class="card"><i class="fab fa-reddit-alien"></i> Reddit</a>
@@ -227,15 +238,14 @@
     <a href="https://x.com" class="card"><i class="fab fa-x-twitter"></i> Twitter</a>
   </div>
 
-  <!-- Bookmark Panel -->
+  <!-- 📚 Bookmark Panel -->
   <div id="bookmarkPanel" class="bookmark-panel">
-    <h3>📚 Bookmarks</h3>
-    <a href="https://thehiddenwiki.org">The Hidden Wiki</a>
-    <a href="https://darkfailllnkf4vf.onion.to">DarkDir</a>
-    <a href="https://uncensoredhiddenwiki.com">Uncensored Links</a>
-    <a href="https://onion.link-directory.pro">Link Directory Pro</a>
-    <a href="https://productdirhidden.onion.to">ProductDir</a>
-    <a href="https://tor.link">Tor Link List</a>
+    <h3><i class="fas fa-book"></i> Bookmarks</h3>
+    <a href="#"><i class="fas fa-sign-in-alt"></i> Import bookmarks...</a>
+    <a href="#"><i class="fas fa-folder"></i> Illegal Services</a>
+    <a href="#"><i class="fas fa-folder"></i> News</a>
+    <a href="#"><i class="fas fa-folder"></i> Tools</a>
+    <a href="#"><i class="fas fa-folder"></i> Projects</a>
   </div>
 
   <script>
