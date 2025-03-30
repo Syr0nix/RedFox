@@ -173,16 +173,13 @@
     <a href="https://x.com" class="card"><i class="fab fa-x-twitter"></i> Twitter</a>
   </div>
 
-  <!-- Now Playing -->
   <div id="now-playing">🎵 Now Playing: (None)</div>
   <div class="music-tabs">
     <button onclick="sendControl('togglePlay')"><i class="fas fa-play"></i> Play/Pause</button>
     <button onclick="sendControl('next')"><i class="fas fa-forward"></i> Next</button>
   </div>
 
-  <!-- Scripts -->
   <script>
-    // Weather
     fetch("https://wttr.in/?format=%t&u")
       .then(res => res.text())
       .then(temp => {
@@ -192,7 +189,6 @@
         document.getElementById("weather").textContent = "🌡️ Temp: N/A";
       });
 
-    // Clock
     let use24Hour = false;
     function updateClock() {
       const now = new Date();
@@ -206,7 +202,6 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Cursor Trail
     document.addEventListener('mousemove', e => {
       const dot = document.createElement('div');
       dot.classList.add('trail-dot');
@@ -216,9 +211,10 @@
       setTimeout(() => dot.remove(), 800);
     });
 
-    // 🔁 Listen for now-playing updates from extension
     window.addEventListener("message", function (event) {
-      if (event.origin !== window.location.origin) return;
+      // Allow local files too (for file:// URLs in Firefox)
+      if (event.origin !== "null" && event.origin !== window.location.origin) return;
+
       const msg = event.data;
       if (msg && msg.type === "nowPlaying") {
         const label = msg.title
@@ -228,9 +224,8 @@
       }
     });
 
-    // ⏯ Send control commands to the extension
     function sendControl(command) {
-      window.postMessage({ type: "control", command }, window.location.origin);
+      window.postMessage({ type: "control", command }, "*");
     }
   </script>
 </body>
