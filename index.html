@@ -158,53 +158,6 @@
       box-shadow: 0 0 8px #ff3c3c;
       text-shadow: 0 0 5px #ff3c3c;
     }
-
-    /* === Bookmark Panel (Right) === */
-    .bookmark-panel {
-      position: fixed;
-      top: 80px;
-      right: 30px;
-      background: rgba(0,0,0,0.85);
-      border: 1px solid #ff3c3c;
-      padding: 15px 20px;
-      border-radius: 10px;
-      color: #ff3c3c;
-      box-shadow: 0 0 15px #ff3c3c;
-      max-height: 400px;
-      overflow-y: auto;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 10;
-    }
-
-    .bookmark-panel.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .bookmark-panel h3 {
-      margin-top: 0;
-      font-size: 1.2em;
-      border-bottom: 1px solid #ff3c3c;
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-    }
-
-    .bookmark-panel a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #ff3c3c;
-      margin: 6px 0;
-      text-decoration: none;
-      font-size: 15px;
-    }
-
-    .bookmark-panel a:hover {
-      color: #ffffff;
-      text-shadow: 0 0 5px #ff3c3c;
-    }
   </style>
 </head>
 <body>
@@ -236,16 +189,6 @@
     <a href="https://www.reddit.com" class="card"><i class="fab fa-reddit-alien"></i> Reddit</a>
     <a href="https://github.com" class="card"><i class="fab fa-github"></i> GitHub</a>
     <a href="https://x.com" class="card"><i class="fab fa-x-twitter"></i> Twitter</a>
-  </div>
-
-  <!-- 📚 Bookmark Panel -->
-  <div id="bookmarkPanel" class="bookmark-panel">
-    <h3><i class="fas fa-book"></i> Bookmarks</h3>
-    <a href="#"><i class="fas fa-sign-in-alt"></i> Import bookmarks...</a>
-    <a href="#"><i class="fas fa-folder"></i> Illegal Services</a>
-    <a href="#"><i class="fas fa-folder"></i> News</a>
-    <a href="#"><i class="fas fa-folder"></i> Tools</a>
-    <a href="#"><i class="fas fa-folder"></i> Projects</a>
   </div>
 
   <script>
@@ -281,18 +224,6 @@
       dot.style.top = `${e.pageY}px`;
       document.body.appendChild(dot);
       setTimeout(() => dot.remove(), 800);
-    });
-
-    // Bookmark Panel Toggle on Mousemove
-    let bookmarkPanel = document.getElementById('bookmarkPanel');
-    let hideTimeout;
-
-    document.addEventListener('mousemove', () => {
-      bookmarkPanel.classList.add('show');
-      clearTimeout(hideTimeout);
-      hideTimeout = setTimeout(() => {
-        bookmarkPanel.classList.remove('show');
-      }, 3000);
     });
   </script>
 </body>
