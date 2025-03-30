@@ -5,7 +5,9 @@
   <title>RedFox</title>
   <style>
     body {
-      background-color: #0a0a0a;
+      background: linear-gradient(-45deg, #0a0a0a, #1a0000, #220000, #0a0a0a);
+      background-size: 400% 400%;
+      animation: bgMove 12s ease infinite;
       color: #ff3c3c;
       font-family: "Segoe UI", sans-serif;
       display: flex;
@@ -15,13 +17,34 @@
       height: 100vh;
       margin: 0;
     }
-    h1 {
-      font-size: 3rem;
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .logo {
+      font-size: 3.5rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
+      animation: pulse 2s infinite alternate;
       margin-bottom: 10px;
     }
+
+    @keyframes pulse {
+      from {
+        text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
+      }
+      to {
+        text-shadow: 0 0 15px #ff5a5a, 0 0 30px #ff5a5a;
+      }
+    }
+
     .search-bar {
       margin-top: 10px;
     }
+
     input[type="text"] {
       background-color: #111;
       border: 1px solid #ff3c3c;
@@ -31,82 +54,83 @@
       width: 400px;
       font-size: 16px;
     }
-    .links {
-      margin-top: 30px;
-      display: flex;
-      gap: 20px;
-    }
-    .links a {
-      color: #ff3c3c;
-      text-decoration: none;
-      font-size: 18px;
-      transition: color 0.2s ease;
-    }
-    .links a:hover {
-      color: #ff7070;
-    }
-    .logo {
-  font-size: 3.5rem;
-  font-weight: bold;
-  text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
-  animation: pulse 2s infinite alternate;
-}
 
-@keyframes pulse {
-  from {
-    text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
-  }
-  to {
-    text-shadow: 0 0 15px #ff5a5a, 0 0 30px #ff5a5a;
-  }
-}
+    .links-grid {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: #111;
+      padding: 15px 25px;
+      border: 1px solid #ff3c3c;
+      border-radius: 10px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #ff3c3c;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 10px #ff3c3c;
+    }
+
     #clock {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 24px;
-  color: #ff3c3c;
-  text-shadow: 0 0 10px #ff3c3c;
-  font-weight: bold;
-  font-family: "Courier New", monospace;
-}
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 24px;
+      color: #ff3c3c;
+      text-shadow: 0 0 10px #ff3c3c;
+      font-weight: bold;
+      font-family: "Courier New", monospace;
+      cursor: pointer;
+    }
   </style>
 </head>
-  <div id="clock" title="Click to toggle 12/24 hour format"></div>
-<script>
-  let use24Hour = false;
-
-  function updateClock() {
-    const now = new Date();
-    const options = {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: !use24Hour
-    };
-    document.getElementById('clock').textContent = now.toLocaleTimeString([], options);
-  }
-
-  document.getElementById('clock').addEventListener('click', () => {
-    use24Hour = !use24Hour;
-    updateClock();
-  });
-
-  setInterval(updateClock, 1000);
-  updateClock();
-</script>
 <body>
-<h1 class="logo">🦊 RedFox</h1>
+  <div id="clock" title="Click to toggle 12/24 hour format"></div>
+
+  <h1 class="logo">🦊 RedFox</h1>
+
   <div class="search-bar">
     <form action="https://www.google.com/search" method="GET">
       <input type="text" name="q" placeholder="Search the web...">
     </form>
   </div>
-  <div class="links">
-    <a href="https://www.youtube.com">YouTube</a>
-    <a href="https://www.reddit.com">Reddit</a>
-    <a href="https://github.com">GitHub</a>
-    <a href="https://x.com">X</a>
+
+  <div class="links-grid">
+    <a href="https://www.youtube.com" class="card">🎥 YouTube</a>
+    <a href="https://www.reddit.com" class="card">👽 Reddit</a>
+    <a href="https://github.com" class="card">💻 GitHub</a>
+    <a href="https://x.com" class="card">💬 X</a>
   </div>
+
+  <script>
+    let use24Hour = false;
+
+    function updateClock() {
+      const now = new Date();
+      const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: !use24Hour
+      };
+      document.getElementById('clock').textContent = now.toLocaleTimeString([], options);
+    }
+
+    document.getElementById('clock').addEventListener('click', () => {
+      use24Hour = !use24Hour;
+      updateClock();
+    });
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 </body>
 </html>
