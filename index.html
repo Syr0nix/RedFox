@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>RedFox</title>
   <style>
-    /* 🔥 Animated background */
     body {
       background: linear-gradient(-45deg, #0a0a0a, #1a0000, #220000, #0a0a0a);
       background-size: 400% 400%;
@@ -26,7 +25,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* 🦊 Glowing RedFox Logo */
     .logo {
       font-size: 3.5rem;
       font-weight: bold;
@@ -44,7 +42,6 @@
       }
     }
 
-    /* ⏰ Clock */
     #clock {
       position: absolute;
       top: 20px;
@@ -57,7 +54,20 @@
       cursor: pointer;
     }
 
-    /* 🔍 Search */
+    #weather {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 18px;
+      font-family: "Courier New", monospace;
+      color: #ff3c3c;
+      text-shadow: 0 0 8px #ff3c3c;
+      background-color: rgba(0,0,0,0.3);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #ff3c3c;
+    }
+
     .search-bar {
       margin-top: 10px;
     }
@@ -72,7 +82,6 @@
       font-size: 16px;
     }
 
-    /* 📁 Custom Bookmarks */
     .links-grid {
       display: flex;
       gap: 25px;
@@ -97,7 +106,6 @@
       box-shadow: 0 0 10px #ff3c3c;
     }
 
-    /* 🎧 Music player */
     audio {
       margin-top: 30px;
       border: 1px solid #ff3c3c;
@@ -106,19 +114,6 @@
       color: #ff3c3c;
     }
 
-    /* 🌦️ Weather widget */
-    .weather {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 16px;
-      background-color: #111;
-      border: 1px solid #ff3c3c;
-      border-radius: 10px;
-      padding: 10px 20px;
-      box-shadow: 0 0 8px #ff3c3c;
-    }
-
-    /* ✨ Cursor trail effect */
     .trail-dot {
       position: absolute;
       width: 6px;
@@ -139,20 +134,23 @@
   </style>
 </head>
 <body>
+  <!-- 🔒 Safe Weather Display (Static/Hardcoded) -->
+  <div id="weather">🌡️ Temp: 72°F</div>
+
   <!-- ⏰ Clock -->
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
 
   <!-- 🦊 Logo -->
   <h1 class="logo">🦊 RedFox</h1>
 
-  <!-- 🔍 Search bar -->
+  <!-- 🔍 Search -->
   <div class="search-bar">
     <form action="https://www.google.com/search" method="GET">
       <input type="text" name="q" placeholder="Search the web...">
     </form>
   </div>
 
-  <!-- 📁 Bookmarks -->
+  <!-- 📁 Links -->
   <div class="links-grid">
     <a href="https://www.youtube.com" class="card">🎥 YouTube</a>
     <a href="https://www.reddit.com" class="card">👽 Reddit</a>
@@ -166,12 +164,7 @@
     Your browser does not support the audio element.
   </audio>
 
-  <!-- 🌦️ Weather Widget -->
-  <div class="weather">
-    <iframe src="https://wttr.in/?format=3" style="border: none; color: #ff3c3c;" width="250" height="50"></iframe>
-  </div>
-
-  <!-- ⏰ Clock Toggle Script -->
+  <!-- ⏰ Clock Script -->
   <script>
     let use24Hour = false;
 
