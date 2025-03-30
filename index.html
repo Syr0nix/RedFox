@@ -45,10 +45,46 @@
     .links a:hover {
       color: #ff7070;
     }
+    .logo {
+  font-size: 3.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    text-shadow: 0 0 10px #ff3c3c, 0 0 20px #ff3c3c;
+  }
+  to {
+    text-shadow: 0 0 15px #ff5a5a, 0 0 30px #ff5a5a;
+  }
+}
+    #clock {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  color: #ff3c3c;
+  text-shadow: 0 0 10px #ff3c3c;
+  font-weight: bold;
+  font-family: "Courier New", monospace;
+}
+
   </style>
 </head>
+  <div id="clock"></div>
+<script>
+  function updateClock() {
+    const now = new Date();
+    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('clock').textContent = time;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
 <body>
-  <h1>🦊 RedFox</h1>
+<h1 class="logo">🦊 RedFox</h1>
   <div class="search-bar">
     <form action="https://www.google.com/search" method="GET">
       <input type="text" name="q" placeholder="Search the web...">
