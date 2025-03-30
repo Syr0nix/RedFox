@@ -135,8 +135,14 @@
 </head>
 <body>
   <!-- 🔒 Safe Weather Display (Static/Hardcoded) -->
-  <div id="weather">🌡️ Temp: 72°F</div>
-
+<div id="weather">
+  <iframe
+    src="https://wttr.in/?format=%t&u"
+    width="80"
+    height="30"
+    style="border:none; background:transparent; color:#ff3c3c;"
+  ></iframe>
+</div>
   <!-- ⏰ Clock -->
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
 
@@ -152,8 +158,7 @@
 
   <!-- 📁 Links -->
   <div class="links-grid">
-    <a href="https://www.youtube.com" class="card"> <i class="fa fa-youtube-play" style="font-size:48px;color:red"></i>
- YouTube</a>
+    <a href="https://www.youtube.com" class="card">  YouTube</a>
     <a href="https://www.reddit.com" class="card">👽 Reddit</a>
     <a href="https://github.com" class="card">💻 GitHub</a>
     <a href="https://x.com" class="card">💬 X</a>
