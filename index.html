@@ -18,6 +18,7 @@
       height: 100vh;
       margin: 0;
       cursor: crosshair;
+      padding-top: 42px; /* offset for bookmark bar */
     }
 
     @keyframes bgMove {
@@ -120,6 +121,41 @@
       }
     }
 
+    /* === RedFox Bookmarks Toolbar === */
+    .redfox-bookmarks-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #0a0a0a;
+      border-bottom: 1px solid #ff3c3c;
+      display: flex;
+      padding: 5px 10px;
+      gap: 12px;
+      z-index: 1000;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .redfox-bookmarks-bar a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      color: #ff3c3c;
+      background: transparent;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .redfox-bookmarks-bar a:hover {
+      background-color: #1a0000;
+      color: #ffffff;
+      box-shadow: 0 0 8px #ff3c3c;
+      text-shadow: 0 0 5px #ff3c3c;
+    }
+
     /* === Bookmark Panel === */
     .bookmark-panel {
       position: fixed;
@@ -167,6 +203,13 @@
   </style>
 </head>
 <body>
+  <!-- 🔖 Custom RedFox Bookmarks Bar -->
+  <div class="redfox-bookmarks-bar">
+    <a href="#"><i class="fas fa-sign-in-alt"></i> Import bookmarks...</a>
+    <a href="#"><i class="fas fa-folder"></i> Illegal Services</a>
+    <!-- Add more items here if needed -->
+  </div>
+
   <div id="weather">🌡️ Temp: ...</div>
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
   <h1 class="logo">🦊 RedFox™</h1>
@@ -193,7 +236,6 @@
     <a href="https://onion.link-directory.pro">Link Directory Pro</a>
     <a href="https://productdirhidden.onion.to">ProductDir</a>
     <a href="https://tor.link">Tor Link List</a>
-    <!-- Add more as needed -->
   </div>
 
   <script>
