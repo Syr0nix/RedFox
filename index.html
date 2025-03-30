@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>RedFox</title>
   <style>
+    /* 🔥 Animated background */
     body {
       background: linear-gradient(-45deg, #0a0a0a, #1a0000, #220000, #0a0a0a);
       background-size: 400% 400%;
@@ -16,6 +17,7 @@
       justify-content: center;
       height: 100vh;
       margin: 0;
+      cursor: crosshair;
     }
 
     @keyframes bgMove {
@@ -24,6 +26,7 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* 🦊 Glowing RedFox Logo */
     .logo {
       font-size: 3.5rem;
       font-weight: bold;
@@ -41,6 +44,20 @@
       }
     }
 
+    /* ⏰ Clock */
+    #clock {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 24px;
+      color: #ff3c3c;
+      text-shadow: 0 0 10px #ff3c3c;
+      font-weight: bold;
+      font-family: "Courier New", monospace;
+      cursor: pointer;
+    }
+
+    /* 🔍 Search */
     .search-bar {
       margin-top: 10px;
     }
@@ -55,6 +72,7 @@
       font-size: 16px;
     }
 
+    /* 📁 Custom Bookmarks */
     .links-grid {
       display: flex;
       gap: 25px;
@@ -79,30 +97,62 @@
       box-shadow: 0 0 10px #ff3c3c;
     }
 
-    #clock {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 24px;
+    /* 🎧 Music player */
+    audio {
+      margin-top: 30px;
+      border: 1px solid #ff3c3c;
+      border-radius: 10px;
+      background: #111;
       color: #ff3c3c;
-      text-shadow: 0 0 10px #ff3c3c;
-      font-weight: bold;
-      font-family: "Courier New", monospace;
-      cursor: pointer;
+    }
+
+    /* 🌦️ Weather widget */
+    .weather {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 16px;
+      background-color: #111;
+      border: 1px solid #ff3c3c;
+      border-radius: 10px;
+      padding: 10px 20px;
+      box-shadow: 0 0 8px #ff3c3c;
+    }
+
+    /* ✨ Cursor trail effect */
+    .trail-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ff3c3c;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      animation: fadeOut 0.8s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- ⏰ Clock -->
   <div id="clock" title="Click to toggle 12/24 hour format"></div>
 
+  <!-- 🦊 Logo -->
   <h1 class="logo">🦊 RedFox</h1>
 
+  <!-- 🔍 Search bar -->
   <div class="search-bar">
     <form action="https://www.google.com/search" method="GET">
       <input type="text" name="q" placeholder="Search the web...">
     </form>
   </div>
 
+  <!-- 📁 Bookmarks -->
   <div class="links-grid">
     <a href="https://www.youtube.com" class="card">🎥 YouTube</a>
     <a href="https://www.reddit.com" class="card">👽 Reddit</a>
@@ -110,6 +160,18 @@
     <a href="https://x.com" class="card">💬 X</a>
   </div>
 
+  <!-- 🎧 Music Player -->
+  <audio controls autoplay loop>
+    <source src="https://files.catbox.moe/tbdy9s.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- 🌦️ Weather Widget -->
+  <div class="weather">
+    <iframe src="https://wttr.in/?format=3" style="border: none; color: #ff3c3c;" width="250" height="50"></iframe>
+  </div>
+
+  <!-- ⏰ Clock Toggle Script -->
   <script>
     let use24Hour = false;
 
@@ -131,6 +193,18 @@
 
     setInterval(updateClock, 1000);
     updateClock();
+  </script>
+
+  <!-- ✨ Cursor Trail Script -->
+  <script>
+    document.addEventListener('mousemove', e => {
+      const dot = document.createElement('div');
+      dot.classList.add('trail-dot');
+      dot.style.left = e.pageX + 'px';
+      dot.style.top = e.pageY + 'px';
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 800);
+    });
   </script>
 </body>
 </html>
