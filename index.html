@@ -138,9 +138,15 @@
 <div id="weather">
   <iframe
     src="https://wttr.in/?format=%t&u"
-    width="80"
+    width="85"
     height="30"
-    style="border:none; background:transparent; color:#ff3c3c;"
+    style="
+      background: transparent;
+      border: none;
+      overflow: hidden;
+      filter: invert(1) hue-rotate(180deg) brightness(0.9);
+    "
+    scrolling="no"
   ></iframe>
 </div>
   <!-- ⏰ Clock -->
