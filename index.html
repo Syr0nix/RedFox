@@ -213,6 +213,23 @@
 
   <!-- 🧠 Scripts -->
   <script>
+  function loadNowPlaying() {
+    if (chrome && chrome.storage) {
+      chrome.storage.local.get(["redfox_now_playing"], result => {
+        if (result.redfox_now_playing) {
+          document.getElementById("now-playing").textContent =
+            "🎵 Now Playing: " + result.redfox_now_playing;
+        }
+      });
+    }
+  }
+
+  // Refresh every 5 seconds
+  setInterval(loadNowPlaying, 5000);
+  loadNowPlaying();
+</script>
+
+  <script>
     // Weather Fetch
     fetch("https://wttr.in/?format=%t&u")
       .then(res => res.text())
