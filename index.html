@@ -47,13 +47,7 @@
       color: #ff3c3c;
     }
 
-    #clock {
-      top: 20px;
-      right: 30px;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
+    #clock { top: 20px; right: 30px; font-size: 24px; cursor: pointer; }
     #weather {
       top: 20px;
       left: 30px;
@@ -61,13 +55,9 @@
       padding: 6px 12px;
       border-radius: 6px;
       border: 1px solid #ff3c3c;
-      text-shadow: 0 0 8px #ff3c3c;
     }
 
-    .search-bar {
-      margin-top: 10px;
-    }
-
+    .search-bar { margin-top: 10px; }
     input[type="text"] {
       background-color: #111;
       border: 1px solid #ff3c3c;
@@ -102,24 +92,6 @@
       box-shadow: 0 0 10px #ff3c3c;
     }
 
-    .trail-dot {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: #ff3c3c;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.8;
-      animation: fadeOut 0.8s forwards;
-    }
-
-    @keyframes fadeOut {
-      to {
-        transform: scale(2);
-        opacity: 0;
-      }
-    }
-
     #now-playing {
       margin-top: 30px;
       font-size: 18px;
@@ -127,7 +99,6 @@
       padding: 10px 20px;
       border: 1px solid #ff3c3c;
       border-radius: 10px;
-      color: #ff3c3c;
       text-shadow: 0 0 6px #ff3c3c;
     }
 
@@ -184,9 +155,6 @@
       .then(res => res.text())
       .then(temp => {
         document.getElementById("weather").textContent = `🌡️ Temp: ${temp.replace("+", "").trim()}`;
-      })
-      .catch(() => {
-        document.getElementById("weather").textContent = "🌡️ Temp: N/A";
       });
 
     let use24Hour = false;
@@ -202,21 +170,10 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    document.addEventListener('mousemove', e => {
-      const dot = document.createElement('div');
-      dot.classList.add('trail-dot');
-      dot.style.left = `${e.pageX}px`;
-      dot.style.top = `${e.pageY}px`;
-      document.body.appendChild(dot);
-      setTimeout(() => dot.remove(), 800);
-    });
-
     window.addEventListener("message", function (event) {
-      // Allow local files too (for file:// URLs in Firefox)
-      if (event.origin !== "null" && event.origin !== window.location.origin) return;
-
+      if (event.origin !== window.location.origin) return;
       const msg = event.data;
-      if (msg && msg.type === "nowPlaying") {
+      if (msg?.type === "nowPlaying") {
         const label = msg.title
           ? `🎵 Now Playing: ${msg.title}${msg.channel ? " — " + msg.channel : ""}`
           : "🎵 Now Playing: (Nothing)";
